@@ -26,6 +26,15 @@ class UserController extends Controller
         return $this->userRepository->all();
     }
 
+    public function authUser()
+    {
+        return $this->userRepository->authUser();
+    }
+    public function birthDate()
+    {
+        return $this->userRepository->birthDate();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -48,7 +57,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            // 'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
         return $this->userRepository->store($request->all());
@@ -88,7 +97,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            // 'password' => 'nullable|string|min:6|confirmed',
+            'password' => 'nullable|string|min:6|confirmed',
         ]);
 
         return $this->userRepository->update($id, $request->all());

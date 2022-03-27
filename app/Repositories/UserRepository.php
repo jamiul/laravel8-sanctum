@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\UserRepositoryInterface;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Interfaces\UserRepositoryInterface;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -11,6 +12,16 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::all();
     }
+    public function authUser()
+    {
+        return User::find(Auth::user()->id);
+    }
+
+    public function birthDate()
+    {
+        return Auth::user()->created_at->format('jS, F Y');
+    }
+
     public function get($userId)
     {
         return User::find($userId);

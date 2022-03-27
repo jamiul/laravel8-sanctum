@@ -22,13 +22,15 @@ use App\Http\Controllers\UserController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-// user resource
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{user}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::post('/users/{user}', [UserController::class, 'update']);
-Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    // user resource
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/user', [UserController::class, 'authUser']);
+    Route::get('/birthdate', [UserController::class, 'birthDate']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::post('/users/{user}', [UserController::class, 'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
