@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\indivisualEnv;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -19,10 +20,20 @@ class AuthController extends Controller
             'password' => ['required', 'min:8', 'confirmed']
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
+        ]);
+
+        // create indivisual env
+        $app_key = "laravel" . $user->id;
+        $app_secret = "secret" . $user->id;
+
+        indivisualEnv::create([
+            'app_key' => Hash::make($app_key),
+            'app_secret' => Hash::make($app_secret),
+            'user_id' => $user->id
         ]);
     }
 
